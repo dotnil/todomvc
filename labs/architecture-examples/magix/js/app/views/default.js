@@ -10,6 +10,7 @@ KISSY.add('app/views/default', function (S, View, Router, Todo, XTemplate, Node)
 		render: function () {
 			var filter = this.location.pathname.replace(/^\//, '');
 			var todos;
+			var allTodos = Todo.all();
 			var completedTodos = Todo.where({ completed: true });
 			var activeTodos = Todo.where({ completed: false });
 			var markup;
@@ -20,11 +21,12 @@ KISSY.add('app/views/default', function (S, View, Router, Todo, XTemplate, Node)
 			} else if ('completed' === filter) {
 				todos = completedTodos;
 			} else {
-				todos = Todo.all();
+				todos = allTodos;
 			}
 
 			markup = new XTemplate(this.template).render({
 				todos: todos,
+				allTodos: allTodos,
 				activeTodos: activeTodos,
 				completedTodos: completedTodos,
 				filter: filter
@@ -107,12 +109,12 @@ KISSY.add('app/views/default', function (S, View, Router, Todo, XTemplate, Node)
 			var ev = e.domEvent;
 			var li = $(ev.target).parent('li');
 
-			Todo.delete(li.attr('data-id'));
+			Todo.delete({ id: li.attr('data-id') });
 			this.render();
 		},
 
 		'clearCompleted<click>': function () {
-			Todo.delete({ completed: false });
+			Todo.delete({ completed: true });
 			this.render();
 		}
 	});
