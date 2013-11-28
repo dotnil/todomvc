@@ -114,7 +114,7 @@ KISSY.add('app/views/default', function (S, View, Router, Todo, XTemplate, Node)
 		},
 
 		'clearCompleted<click>': function () {
-			Todo.delete({ completed: false });
+			Todo.delete({ completed: true });
 			this.render();
 		}
 	});
