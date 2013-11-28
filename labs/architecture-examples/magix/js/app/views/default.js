@@ -109,7 +109,7 @@ KISSY.add('app/views/default', function (S, View, Router, Todo, XTemplate, Node)
 			var ev = e.domEvent;
 			var li = $(ev.target).parent('li');
 
-			Todo.delete(li.attr('data-id'));
+			Todo.delete({ id: li.attr('data-id') });
 			this.render();
 		},
 
